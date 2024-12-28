@@ -21,13 +21,13 @@ const openai = new OpenAI({
     apiKey: process.env.OPEN_AI_KEY,
 })
 
-const s3 = new S3Client({
-    credentials: {
-        accessKeyId: process.env.ACCESS_KEY,
-        secretAccessKey: process.env.SECRET_KEY,
-    },
-    region: process.env.BUCKET_REGION,
-})
+// const s3 = new S3Client({
+//     credentials: {
+//         accessKeyId: process.env.ACCESS_KEY,
+//         secretAccessKey: process.env.SECRET_KEY,
+//     },
+//     region: process.env.BUCKET_REGION,
+// })
 
 app.use(cors())
 
@@ -62,6 +62,7 @@ io.on("connection", (socket) => {
 
     socket.on('process-video', async (data) => {
         console.log('Processing video', data)
+        return;
         recordedChunks = []
         fs.readFile('temp_upload/' + data.filename, async (err, file) => {
             const processing = await axios.post(
