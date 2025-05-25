@@ -39,9 +39,14 @@ This Palu has three components:
    cd Palu-Express
    ```
 
+   also install ffmpeg before installing dependencies
+
 2. Install dependencies:
    ```bash
    npm install
+   python -m venv .venv
+   source ./.venv/Scripts/activate
+   pip -r requirement.txt
    ```
 
 3. Set up environment variables:
@@ -50,6 +55,10 @@ This Palu has three components:
 4. Start the development server:
    ```bash
    npm run dev
+   ```
+
+   ```bash
+   uvicorn main:app
    ```
 
 ---
