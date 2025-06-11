@@ -61,6 +61,18 @@ This Palu has three components:
    uvicorn main:app
    ```
 
+Docker
+   ```bash
+   docker build --target development -t palu-express-dev .
+   docker run -v ./:/usr/src/app -p 3000:3000 -p 8000:8000 palu-express-dev
+   ```
+
+   ```bash
+   docker build --target production -t palu-express-pro .
+   docker run -p 3000:3000 -p 8000:8000 palu-express-pro
+   ```
+
+
 ---
 
 Happy Recording! 🎥
