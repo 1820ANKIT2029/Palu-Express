@@ -63,13 +63,11 @@ This Palu has three components:
 
 Docker
    ```bash
-   docker build --target development -t palu-express-dev .
-   docker run -v ./:/usr/src/app -p 3000:3000 -p 8000:8000 palu-express-dev
+   docker-compose --profile dev up --build
    ```
 
    ```bash
-   docker build --target production -t palu-express-pro .
-   docker run -p 3000:3000 -p 8000:8000 palu-express-pro
+   docker-compose up --build
    ```
 
 

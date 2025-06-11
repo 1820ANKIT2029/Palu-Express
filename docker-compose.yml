@@ -1,0 +1,38 @@
+
+services:
+  whisper:
+    build:
+      context: .
+      dockerfile: Dockerfile.whisper
+      target: ${WHISPER_BUILD_TARGET:-production}
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - palu-network
+    
+    profiles: ["dev"]
+    volumes:
+      - ./:/usr/src/app:delegated
+
+  palu-express:
+    build:
+      context: .
+      dockerfile: Dockerfile.express
+      target: ${EXPRESS_BUILD_TARGET:-production}
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+    networks:
+      - palu-network
+
+    profiles: ["dev"]
+    volumes:
+      - ./:/usr/src/app:delegated
+      - /usr/src/app/node_modules
+
+networks:
+  palu-network:
+    driver: bridge
