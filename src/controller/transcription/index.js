@@ -2,6 +2,7 @@ import axios from "axios";
 import FormData from "form-data";
 import fs from "fs";
 import { summary } from "./gemini.js";
+import OpenAI from "openai";
 
 async function transcribeLocally(filePath) {
     const form = new FormData();
@@ -12,6 +13,24 @@ async function transcribeLocally(filePath) {
             headers: form.getHeaders(),
         });
         return response.data.text;
+    } catch (err) {
+        console.log("Error transcribing:", err.message);
+        throw err;
+    }
+}
+
+async function transcribeOpenAi(filePath) {
+    const openai = new OpenAI({
+        apiKey: process.env.OPEN_AI_KEY
+    })
+
+    try {
+        const translation = await openai.audio.translations.create({
+            file: fs.createReadStream(filePath),
+            model: "whisper-1",
+            response_format: 'text',
+        });
+        return translation.text;
     } catch (err) {
         console.log("Error transcribing:", err.message);
         throw err;
@@ -30,7 +49,9 @@ export async function handleTranscription(data) {
             return;
         }
 
-        const transcription = await transcribeLocally(filePath)
+
+        // const transcription = await transcribeLocally(filePath)
+        const transcription = await transcribeOpenAi(filePath)
         console.log(transcription)
 
         if (transcription) {

@@ -26,7 +26,6 @@ const io = new Server(server, {
     },
 })
 
-
 io.on("connection", (socket) => {
     console.log(`${socket.id} connected`)
 
@@ -60,6 +59,7 @@ io.on("connection", (socket) => {
                 `${process.env.NEXT_API_HOST}recording/${data.userId}/processing`,
                 { filename: newFileName }
             )
+            
             if (processing.data.status !== 200)
                 return console.log("🔴 Error: something went wrong with creating the processing file")
 
